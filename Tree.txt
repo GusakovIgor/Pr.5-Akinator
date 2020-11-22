@@ -1,0 +1,31 @@
+"Alive"
+}
+	"Human"
+	}
+		"Student"
+		}
+			"Zelenkin"
+		}
+		{
+			"Ded"
+		{
+	{
+	}
+		"Cat"
+		}
+			"Poltorashka"
+		{
+		}
+			"Huge"
+			}
+				"Slon"
+			{
+			}
+				"Rabbit"
+			{
+		{
+	{
+{
+}
+"Coffee"
+{

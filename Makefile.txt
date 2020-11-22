@@ -1,0 +1,22 @@
+run: Akinator.exe
+	Akinator.exe
+
+Akinator.exe: Akinator.h Akinator_main.o Logs.o TreeFileProcessing.o
+	g++ -w Akinator.h Akinator_main.o Logs.o TreeFileProcessing.o -o Akinator.exe
+
+Akinator_main.o: Akinator_main.cpp
+	g++ -c -w Akinator_main.cpp
+
+Logs.o: Logs.cpp
+	g++ -c -w Logs.cpp
+
+TreeFileProcessing.o: TreeFileProcessing.cpp
+	g++ -c -w TreeFileProcessing.cpp
+
+
+
+
+
+clear: 
+	del Akinator_main.o Logs.o TreeFileProcessing.o
+
