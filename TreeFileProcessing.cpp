@@ -14,7 +14,7 @@ Tree* ReadTree ()
     size_t num_symbols = TextReader (name, buff, size);
     
     tree->root = ScanPositive (tree->root, buff);
-    
+
     return tree;
 }
 
@@ -25,34 +25,35 @@ Node* ScanPositive (Node* vertex, char* buff)
     char* temp = NULL;
     
     if (buff)
-        temp = strtok (buff, " \t\n\"");
+        temp = strtok (buff, "\t\n\"");
     else
-        temp = strtok (NULL, " \t\n\"");    // Считываем слово
-    
-    //printf ("1.temp = %s\n", temp);
-    
+        temp = strtok (NULL, "\t\n\"");    // Считываем слово
     
     if (isalpha (temp[0]))
     {
         vertex->text = temp;
         
-        temp = strtok (NULL, " \t\n\"");    // Считываем скобочку после слова
+        temp = strtok (NULL, "\t\n\"");    // Считываем скобочку после слова
         
         if (temp[0] != '}')                 // Если она открывающаяся, то всё по новой
         {
             vertex->yes = ScanPositive (vertex->yes, NULL);     // Вот здесь мы возвращаемся из рекурсии (заканчиваем считывать поддерево)
+            vertex->yes->back = vertex;
             
-            temp = strtok (NULL, " \t\n\"");                    // Считываем скобочку сразу после конца поддерева, чтобы понять, что дальше
+            temp = strtok (NULL, "\t\n\"");                    // Считываем скобочку сразу после конца поддерева, чтобы понять, что дальше
             
             if (temp && temp[0] == '{')                         // Если она открывается, то нам нужно заполнить отрицательное поддерево
-                vertex->no = ScanPositive (vertex->no, NULL);      
+            {
+                vertex->no = ScanPositive (vertex->no, NULL);
+                vertex->no->back = vertex;
+            }
                                                                 // А иначе нам ничего не нужно, просто cчитываем скобочку сразу после конца поддерева
                                                                 // и возвращаемся выше
 
-            temp = strtok (NULL, " \t\n\"");                    // Она 100% закрывающаяся, т.к. все открывающиеся мы пролистали Scan'ом
+            temp = strtok (NULL, "\t\n\"");                    // Она 100% закрывающаяся, т.к. все открывающиеся мы пролистали Scan'ом
 
             if (temp && temp[0] != '}')
-                ErrorReport (WRONG_FILE_FORMAT, "ScanPositiveSubTree");
+                ErrorReport (WRONG_FILE_FORMAT, "ScanPositive");
         }
     }
     else
@@ -68,24 +69,19 @@ Node* ScanPositive (Node* vertex, char* buff)
 void WriteTree (Node* tree, FILE* database)
 {
     fprintf (database, "\"%s\"\n", tree->text);
-    printf ("\"%s\"\n", tree->text);
     
     if (tree->yes)
     {
         fprintf (database, "{\n");
-        printf ("{\n");
         WriteTree (tree->yes, database);
         fprintf (database, "}\n");
-        printf ("}\n");
     }
     
     if (tree->no)
     {
         fprintf (database, "{\n");
-        printf ("{\n");
         WriteTree (tree->no, database);
         fprintf (database, "}\n");
-        printf ("}\n");
     }
 }
 

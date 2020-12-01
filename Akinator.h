@@ -3,7 +3,10 @@
 #endif
 
 #include "TXLib.h"
+#include "List\\List.h"
 
+
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -14,22 +17,22 @@
 typedef int error_t;
 
 const int MAX_TEXT_LEN = 100;
+const int MAX_HEIGHT   = 20;
 
-enum Errors {ALLOCATION_ERROR = 0, WRONG_NODE_PTR, INCORRECT_MODE, TREE_FILE_ERROR, WRONG_FILE_FORMAT, WRONG_ANSWER};
+enum Errors {ALLOCATION_ERROR = 0, WRONG_NODE_PTR, INCORRECT_MODE, TREE_FILE_ERROR, WRONG_FILE_FORMAT, WRONG_ANSWER, WRONG_ELEM_NAME};
 
 enum Modes {GAME = 1, 
             DEFINITION  = 2,
             COMPARISION = 3, 
             TREE        = 4,
-            EXIT        = 5};
-
-struct Node
-{
-    char* text;
-    
-    Node* no;
-    Node* yes;
-};
+            EXIT        = 5,
+            BREAK       = 6};
+            
+enum Moods {HELLO = 0,
+            ASK   = 1,
+            RIGHT = 3,
+            SAD   = 6,
+            WRONG = 10};
 
 struct Tree
 {
@@ -55,13 +58,22 @@ int  ModeDetector (const char*);
 
 void Akinator (Tree* tree, int mode, HDC Pikachu[]);
 
-void PlayGame (Node* root, HDC Pikachu[]);
-void Checker  (Node* root, HDC Pikachu[]);
+void  PlayGame (Node* root, HDC Pikachu[]);
+void  Checker  (Node* root, HDC Pikachu[]);
 Node* InsertNode (Node* vertex);
 
+void  Definition (Tree* tree);
+Node* Find (Node* root, char* temp);
+int   Filler (List* lst, Node* object, Node* root, int index);
+
+void  Comparision (Tree* tree);
+void  PrintProperties (List* lst_1, List* lst_2);
+void  PrintDifference (List* lst, char* temp);
 
 void SayGoodbye    (HDC* Pikachu);
 void Delete_images (HDC Pikachu_ask[]);
+
+int  Random (int border);
 //----------------------
 
 

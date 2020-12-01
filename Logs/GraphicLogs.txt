@@ -1,0 +1,70 @@
+digraph 0 {
+node [shape = "record", style = "filled", color = "#000800", fillcolor = " #ED96EC"]
+"0000000004ab9620" [color = "#000800", label = "{Alive}"]
+"0000000004ab9bc0" [color = "#000800", label = "{From Beans}"]
+"0000000004ab9bc0" -> "0000000004ab9620"
+ [color = white]"0000000004ab94a0" [color = "#000800", label = "{Alcohol-free}"]
+"0000000004ab94a0" -> "0000000004ab9bc0"
+ [color = white]"0000000004ab9d40" [color = "#000800", fillcolor = turquoise, label = "{Vesper}"]
+"0000000004ab9d40" -> "0000000004ab94a0"
+ [color = white]"0000000004ab94a0" -> "0000000004ab9d40"
+"0000000004ab9b30" [color = "#000800", fillcolor = turquoise, label = "{Tea}"]
+"0000000004ab9b30" -> "0000000004ab94a0"
+ [color = white]"0000000004ab94a0" -> "0000000004ab9b30"
+"0000000004ab9bc0" -> "0000000004ab94a0"
+"0000000004ab9590" [color = "#000800", fillcolor = turquoise, label = "{Coffee}"]
+"0000000004ab9590" -> "0000000004ab9bc0"
+ [color = white]"0000000004ab9bc0" -> "0000000004ab9590"
+"0000000004ab9620" -> "0000000004ab9bc0"
+"0000000004ab9ad0" [color = "#000800", label = "{Human}"]
+"0000000004ab9ad0" -> "0000000004ab9620"
+ [color = white]"0000000004ab9260" [color = "#000800", label = "{Cat}"]
+"0000000004ab9260" -> "0000000004ab9ad0"
+ [color = white]"0000000004ab9920" [color = "#000800", label = "{Huge}"]
+"0000000004ab9920" -> "0000000004ab9260"
+ [color = white]"0000000004ab9ce0" [color = "#000800", label = "{With long ears}"]
+"0000000004ab9ce0" -> "0000000004ab9920"
+ [color = white]"0000000004ab98c0" [color = "#000800", fillcolor = turquoise, label = "{Mouse}"]
+"0000000004ab98c0" -> "0000000004ab9ce0"
+ [color = white]"0000000004ab9ce0" -> "0000000004ab98c0"
+"0000000004ab95f0" [color = "#000800", fillcolor = turquoise, label = "{Rabbit}"]
+"0000000004ab95f0" -> "0000000004ab9ce0"
+ [color = white]"0000000004ab9ce0" -> "0000000004ab95f0"
+"0000000004ab9920" -> "0000000004ab9ce0"
+"0000000004ab9b60" [color = "#000800", label = "{Grey}"]
+"0000000004ab9b60" -> "0000000004ab9920"
+ [color = white]"0000000004ab97a0" [color = "#000800", fillcolor = turquoise, label = "{Pikachu}"]
+"0000000004ab97a0" -> "0000000004ab9b60"
+ [color = white]"0000000004ab9b60" -> "0000000004ab97a0"
+"0000000004ab9680" [color = "#000800", fillcolor = turquoise, label = "{Slon}"]
+"0000000004ab9680" -> "0000000004ab9b60"
+ [color = white]"0000000004ab9b60" -> "0000000004ab9680"
+"0000000004ab9920" -> "0000000004ab9b60"
+"0000000004ab9260" -> "0000000004ab9920"
+"0000000004ab9230" [color = "#000800", label = "{Live with RT}"]
+"0000000004ab9230" -> "0000000004ab9260"
+ [color = white]"0000000004ab9860" [color = "#000800", fillcolor = turquoise, label = "{Edinichka}"]
+"0000000004ab9860" -> "0000000004ab9230"
+ [color = white]"0000000004ab9230" -> "0000000004ab9860"
+"0000000004ab9b00" [color = "#000800", fillcolor = turquoise, label = "{Poltorashka}"]
+"0000000004ab9b00" -> "0000000004ab9230"
+ [color = white]"0000000004ab9230" -> "0000000004ab9b00"
+"0000000004ab9260" -> "0000000004ab9230"
+"0000000004ab9ad0" -> "0000000004ab9260"
+"0000000004ab93b0" [color = "#000800", label = "{Student}"]
+"0000000004ab93b0" -> "0000000004ab9ad0"
+ [color = white]"0000000004ab9200" [color = "#000800", fillcolor = turquoise, label = "{Ded}"]
+"0000000004ab9200" -> "0000000004ab93b0"
+ [color = white]"0000000004ab93b0" -> "0000000004ab9200"
+"0000000004ab9710" [color = "#000800", label = "{In MIPT}"]
+"0000000004ab9710" -> "0000000004ab93b0"
+ [color = white]"0000000004ab9950" [color = "#000800", fillcolor = turquoise, label = "{Demianova Daria}"]
+"0000000004ab9950" -> "0000000004ab9710"
+ [color = white]"0000000004ab9710" -> "0000000004ab9950"
+"0000000004ab9530" [color = "#000800", fillcolor = turquoise, label = "{Zelenkin}"]
+"0000000004ab9530" -> "0000000004ab9710"
+ [color = white]"0000000004ab9710" -> "0000000004ab9530"
+"0000000004ab93b0" -> "0000000004ab9710"
+"0000000004ab9ad0" -> "0000000004ab93b0"
+"0000000004ab9620" -> "0000000004ab9ad0"
+}

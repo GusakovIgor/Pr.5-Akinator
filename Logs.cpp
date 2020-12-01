@@ -31,6 +31,10 @@ void ErrorReport (error_t err_code, const char* func)
         case WRONG_ANSWER:      fprintf (StdLogs, "Incorrect input format (Pikachu looks like an adult, but it's not true. He can't understand everything)\n");
                                 fprintf (StdLogs, "Please answer \"Yes\" or \"No\"\n");
                                 break;
+        
+        case WRONG_ELEM_NAME:   fprintf (StdLogs, "Wrong name of element in Pikachu's tree (there is no such element, or you've made a mistake)\n");
+                                fprintf (StdLogs, "Please check your input\n");
+                                break;
     }
     
     assert (!"OK");
@@ -41,7 +45,7 @@ void PrintModes (FILE* Logs)
 {
     
     fprintf (Logs, "\n");
-    //txSpeak ("\vHere you can see, what modes you can play:\n");
+    txSpeak ("\vHere you can see, what modes you can play:\n");
     fprintf (Logs, "1) Game:\n");
     fprintf (Logs, "    -You'll need to make a wish for something and then\n");
     fprintf (Logs, "     Akinator will ask you some questions, trying to find out your wish\n");
@@ -85,13 +89,7 @@ void PrintModes (FILE* Logs)
     
     
     //txSpeak ("\vIf you want to see more, you can call Akinator_help, using this command:\n");
-    fprintf (Logs, "make -f Makefile.txt help\n\n");
-}
-
-
-void TreeDump (Tree* tree)
-{
-    
+    //fprintf (Logs, "make -f Makefile.txt help\n\n");
 }
 
 
@@ -100,7 +98,7 @@ void LogsMaker (Node* root, char* mode)
 {
     int num_mode = (strcmp(mode, "NULL") == 0) ? 1 : 0;
     
-    FILE* GraphicLogs = fopen ("GraphicLogs.txt", "w");
+    FILE* GraphicLogs = fopen ("Logs\\GraphicLogs.txt", "w");
     static int call = 0;
     
     fprintf (GraphicLogs, "digraph %d {\n", call);
@@ -110,12 +108,12 @@ void LogsMaker (Node* root, char* mode)
     {
         fprintf (GraphicLogs, "\"%p\" [color = \"#000800\", label = \"{%s}\"]\n", 
                                                                             root, root->text);
-        if (root->no != NULL)
+        if (root->no)
         {
             PrintSubTree (root->no, GraphicLogs, num_mode);
             fprintf (GraphicLogs, "\"%p\" -> \"%p\"\n", root, root->no);
         }
-        if (root->yes != NULL)
+        if (root->yes)
         {
             PrintSubTree (root->yes, GraphicLogs, num_mode);
             fprintf (GraphicLogs, "\"%p\" -> \"%p\"\n", root, root->yes);
@@ -132,9 +130,9 @@ void LogsMaker (Node* root, char* mode)
     
     
     char* command_1 = (char*) calloc (100, sizeof(char));
-    sprintf (command_1, "dot -Tjpeg GraphicLogs.txt > GraphicLogs_%d.jpeg", call);
+    sprintf (command_1, "dot -Tjpeg Logs\\GraphicLogs.txt > Logs\\GraphicLogs_%d.jpeg", call);
     char* command_2 = (char*) calloc (100, sizeof(char));
-    sprintf (command_2, "start GraphicLogs_%d.jpeg", call);
+    sprintf (command_2, "start Logs\\GraphicLogs_%d.jpeg", call);
     
     system (command_1);
     system (command_2);
@@ -154,6 +152,8 @@ void PrintSubTree (Node* root, FILE* GraphicLogs, int mode)
     else
         fprintf (GraphicLogs, "\"%p\" [color = \"#000800\", fillcolor = turquoise, label = \"{%s}\"]\n", 
                                                                                 root, root->text);
+    
+    fprintf (GraphicLogs, "\"%p\" -> \"%p\"\n [color = white]", root, root->back);
     
     if (root->no)
     {
@@ -181,3 +181,86 @@ void PrintSubTree (Node* root, FILE* GraphicLogs, int mode)
 }
 
 
+
+
+void PhysicalLogsMaker (List* lst)
+{   
+    FILE* GraphicLogs = fopen ("Logs\\GraphicLogs_P.txt", "w");
+    
+    static int call = 0;
+    
+    fprintf (GraphicLogs, "digraph %d {\n", call);
+    
+    MakePlaces (lst, GraphicLogs);
+    
+    fprintf (GraphicLogs, "node [shape = \"record\", style = \"filled\", color = \"#000800\", fillcolor = \" #C0FFEE\"]\n");
+    fprintf (GraphicLogs, "\"%p\" [color = \"#000800\", fillcolor = \"#c81446\", label = \"{NULL | {%d|%d|%d}}\"]\n", &lst->nodes[0], lst->nodes[0].prev, 0, lst->nodes[0].next);
+    
+    if (lst->size > 0)
+    {
+        PrintBranch (lst, GraphicLogs, lst->head);
+        fprintf (GraphicLogs, "\"%p\" -> \"%p\"\n", &lst->nodes[0], &lst->nodes[lst->head]);
+    }
+    if (lst->size < lst->capacity - 1)
+    {
+        PrintBranch (lst, GraphicLogs, lst->free);
+        fprintf (GraphicLogs, "\"%p\" -> \"%p\"\n", &lst->nodes[0], &lst->nodes[lst->free]);
+    }
+
+    fprintf (GraphicLogs, "}");
+    
+    fclose (GraphicLogs);
+    
+    char* command_1 = (char*) calloc (100, sizeof(char));
+    char* command_2 = (char*) calloc (100, sizeof(char));
+    sprintf (command_1, "dot -Tjpeg Logs\\GraphicLogs_P.txt > Logs\\GraphicLogs_P%d.jpeg", call);
+    sprintf (command_2, "start Logs\\GraphicLogs_P%d.jpeg", call);
+    
+    system (command_1);
+    system (command_2);
+    
+    free (command_1);
+    free (command_2);
+    
+    call++;
+}
+
+
+void PrintBranch (List* lst, FILE* GraphicLogs, int start_index)
+{
+    int index = start_index;
+    while (index != 0)
+    {   
+        if (start_index == lst->free)
+            fprintf (GraphicLogs, "{rank = same; \"%d\"; \"%p\" [fillcolor = \"#C0FFEE\", label = \"{free | {%d|%d|%d}}\"]; }\n", index,
+                                                                            &lst->nodes[index], lst->nodes[index].prev, index, lst->nodes[index].next);
+        else if (start_index == lst->head)
+            fprintf (GraphicLogs, "{rank = same; \"%d\"; \"%p\" [fillcolor = \"#ED96EC\", label = \"{% | {%d|%d|%d}}\"]; }\n", index,
+                                                                        &lst->nodes[index], lst->nodes[index].data, lst->nodes[index].prev, index, lst->nodes[index].next);
+        else
+        {
+            printf ("ERROR in printing list, wrong start_index for branch (free or filled) printing");
+            assert (!"OK");
+        }
+        
+        fprintf (GraphicLogs, "\"%p\" -> \"%p\"\n", &lst->nodes[index], &lst->nodes[lst->nodes[index].next]);
+        if (index != lst->free && index != lst->head)
+            fprintf (GraphicLogs, "\"%p\" -> \"%p\"\n", &lst->nodes[index], &lst->nodes[lst->nodes[index].prev]);
+        
+        index = lst->nodes[index].next;
+    }
+}
+
+
+void MakePlaces (List* lst, FILE* GraphicLogs)
+{
+    fprintf (GraphicLogs, "{\n");
+    fprintf (GraphicLogs, "node [shape = plaintext, color = white, label = \"\"]\n");
+    fprintf (GraphicLogs, "edge [color = white]\n");
+    for (int i = 1; i < lst->capacity - 1; i++)                 // Capacity is 1 above max index of usable node
+    {
+        fprintf (GraphicLogs, "\"%d\" -> ", i);
+    }
+    fprintf (GraphicLogs, "\"%d\";\n", lst->capacity - 1);
+    fprintf (GraphicLogs, "}\n");
+}

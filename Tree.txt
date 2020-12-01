@@ -1,31 +1,67 @@
 "Alive"
-}
-	"Human"
-	}
-		"Student"
-		}
-			"Zelenkin"
-		}
-		{
-			"Ded"
-		{
-	{
-	}
-		"Cat"
-		}
-			"Poltorashka"
-		{
-		}
-			"Huge"
-			}
-				"Slon"
-			{
-			}
-				"Rabbit"
-			{
-		{
-	{
 {
+"Human"
+{
+"Student"
+{
+"In MIPT"
+{
+"Zelenkin"
 }
+{
+"Demianova Daria"
+}
+}
+{
+"Ded"
+}
+}
+{
+"Cat"
+{
+"Live with RT"
+{
+"Poltorashka"
+}
+{
+"Edinichka"
+}
+}
+{
+"Huge"
+{
+"Grey"
+{
+"Slon"
+}
+{
+"Pikachu"
+}
+}
+{
+"With long ears"
+{
+"Rabbit"
+}
+{
+"Mouse"
+}
+}
+}
+}
+}
+{
+"From Beans"
+{
 "Coffee"
+}
 {
+"Alcohol-free"
+{
+"Tea"
+}
+{
+"Vesper"
+}
+}
+}
